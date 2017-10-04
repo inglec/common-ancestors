@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
@@ -89,6 +91,19 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         }
     }
 
+    public String toString() {
+        return toString(root, 1);
+    }
+
+    private String toString(Node node, int depth) {
+        if (node == null) {
+            return "";
+        }
+        else {
+            return "( " + toString(node.left, depth+1) + " ) " + node.value + "[" + depth + "] ( " + toString(node.right, depth+1) + " )";
+        }
+    }
+
     public static void main(String[] args) {
         BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
 
@@ -97,5 +112,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         bst.insert(1, "Brian");
         bst.insert(4, "Cian");
         bst.insert(5, "Ciarán");
+
+        System.out.println(bst.toString());
     }
 }
