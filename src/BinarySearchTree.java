@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
@@ -68,6 +66,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         return get(root, key);
     }
 
+    /**
+     * Search for a node within a subtree by its key, and then return its value.
+     *
+     * @param node - The node whose subtree is being searched.
+     *        key  - The key of the node being searched for.
+     * @return     - The value of the node, if found.
+     */
     private Value get(Node node, Key key) {
         //If key does not exist in BST return null.
         if (node == null) {
@@ -91,10 +96,23 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         }
     }
 
+    /**
+     * Produces a String representation of the BST where child element of a node
+     * are placed in between brackets to the left and right of the parent node.
+     *
+     * @return  - A String representation of the BST.
+     */
     public String toString() {
         return toString(root, 1);
     }
 
+    /**
+     * Produces a String representation of the subtree where child element of a node
+     * are placed in between brackets to the left and right of the parent node.
+     *
+     * @param depth - The number of levels of recursion the function is run.
+     * @return      - A String representation of the BST.
+     */
     private String toString(Node node, int depth) {
         if (node == null) {
             return "";
