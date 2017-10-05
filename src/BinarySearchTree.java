@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
@@ -97,13 +99,75 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
+     * Return the key of the lowest parent that two nodes have in common.
+     * @param key1 - The key of the first node.
+     * @param key2 - The key of the second node.
+     * @return The key of the lowest common ancestor.
+     */
+    public Key lowestCommonAncestor(Key key1, Key key2) {
+        ArrayList<Key> ancestors1 = getAncestors(key1);
+        ArrayList<Key> ancestors2 = getAncestors(key2);
+
+        if (ancestors1 == null || ancestors2 == null) {
+            return null;
+        }
+
+        for (int i = ancestors1.size()-1; i >= 0; i--) {
+            for (int j = ancestors2.size()-1; j >= 0; j--) {
+                //Return lowest ancestor whose keys equal each other.
+                if (ancestors1.get(i).compareTo(ancestors2.get(j)) == 0) {
+                    return ancestors1.get(i);
+                }
+            }
+        }
+
+        return null;    //Should never return here.
+    }
+
+    /**
+     * Return the trail of keys required to reach the required node from root.
+     *
+     * @param key - The key of the target node.
+     * @return - Path to target node. Null if not in BST.
+     */
+    public ArrayList<Key> getAncestors(Key key) {
+        if (root == null) {
+            return null;    //BST is empty.
+        }
+
+        ArrayList<Key> ancestors = new ArrayList<Key>();
+
+        Node current = root;
+
+        //While not yet at destination node.
+        while (current.key.compareTo(key) != 0) {
+            ancestors.add(current.key);
+
+            //Go left or right based on key.
+            int cmp = key.compareTo(current.key);
+            if (cmp < 0) {
+                current = current.left;
+            }
+            else if (cmp > 0) {
+                current = current.right;
+            }
+
+            if (current == null) {
+                return null;
+            }
+        }
+
+        return ancestors;
+    }
+
+    /**
      * Produces a String representation of the BST where child element of a node
      * are placed in between brackets to the left and right of the parent node.
      *
      * @return  - A String representation of the BST.
      */
     public String toString() {
-        return toString(root, 1);
+        return toString(root, 0);
     }
 
     /**
@@ -125,12 +189,16 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     public static void main(String[] args) {
         BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
 
-        bst.insert(3, "Owen");
-        bst.insert(2, "Leon");
-        bst.insert(1, "Brian");
-        bst.insert(4, "Cian");
-        bst.insert(5, "Ciarán");
+        bst.insert(10, "Owen");
+        bst.insert(3, "Leon");
+        bst.insert(6, "Brian");
+        bst.insert(8, "Cian");
+        bst.insert(4, "Ciarán");
 
         System.out.println(bst.toString());
+
+        ArrayList ancestors = bst.getAncestors(4);
+
+        System.out.println(bst.lowestCommonAncestor(4, 8));
     }
 }
