@@ -64,18 +64,28 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * @param key - The key of the node being searched for.
      * @return    - The value of the node, if found.
      */
-    public Value get(Key key) {
-        return get(root, key);
+    public Value getValue(Key key) {
+        return getNode(key).value;
     }
 
     /**
-     * Search for a node within a subtree by its key, and then return its value.
+     * Search for a node by its key, and then return it.
+     *
+     * @param key - The key of the node being searched for.
+     * @return    - The node, if found.
+     */
+    public Node getNode(Key key) {
+        return getNode(root, key);
+    }
+
+    /**
+     * Search for a node within a subtree by its key, and then return it.
      *
      * @param node - The node whose subtree is being searched.
      *        key  - The key of the node being searched for.
-     * @return     - The value of the node, if found.
+     * @return     - The node, if found.
      */
-    private Value get(Node node, Key key) {
+    private Node getNode(Node node, Key key) {
         //If key does not exist in BST return null.
         if (node == null) {
             return null;
@@ -88,13 +98,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         //If cmp > 0, go right.
         //If cmp == 0, return node's value.
         if (cmp < 0) {
-            return get(node.left, key);
+            return getNode(node.left, key);
         }
         else if (cmp > 0) {
-            return get(node.right, key);
+            return getNode(node.right, key);
         }
         else {
-            return node.value;
+            return node;
         }
     }
 
@@ -171,34 +181,19 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Produces a String representation of the subtree where child element of a node
+     * Produces a String representation of the subtree where the children of a node
      * are placed in between brackets to the left and right of the parent node.
+     * The key, value and depth of each node is displayed.
      *
      * @param depth - The number of levels of recursion the function is run.
      * @return      - A String representation of the BST.
      */
     private String toString(Node node, int depth) {
         if (node == null) {
-            return "";
+            return "x";
         }
         else {
-            return "( " + toString(node.left, depth+1) + " ) " + node.value + "[" + depth + "] ( " + toString(node.right, depth+1) + " )";
+            return "( " + toString(node.left, depth+1) + " ) " + node.key + ":" + node.value + "[" + depth + "] ( " + toString(node.right, depth+1) + " )";
         }
-    }
-
-    public static void main(String[] args) {
-        BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
-
-        bst.insert(10, "Owen");
-        bst.insert(3, "Leon");
-        bst.insert(6, "Brian");
-        bst.insert(8, "Cian");
-        bst.insert(4, "Ciarán");
-
-        System.out.println(bst.toString());
-
-        ArrayList ancestors = bst.getAncestors(4);
-
-        System.out.println(bst.lowestCommonAncestor(4, 8));
     }
 }
