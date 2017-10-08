@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
-    private class Node {
+    public class Node {
         private Node left, right;
 
         private Key key;
@@ -12,6 +12,14 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         public Node(Key key, Value value) {
             this.key = key;
             this.value = value;
+        }
+
+        public Key getKey() {
+            return key;
+        }
+
+        public Value getValue() {
+            return value;
         }
     }
 
@@ -112,26 +120,27 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * Return the key of the lowest parent that two nodes have in common.
      * @param key1 - The key of the first node.
      * @param key2 - The key of the second node.
-     * @return The key of the lowest common ancestor.
+     * @return The lowest common ancestor.
      */
-    public Key lowestCommonAncestor(Key key1, Key key2) {
+    public Node lowestCommonAncestor(Key key1, Key key2) {
         ArrayList<Key> ancestors1 = getAncestors(key1);
         ArrayList<Key> ancestors2 = getAncestors(key2);
 
         if (ancestors1 == null || ancestors2 == null) {
-            return null;
+            return null;    //One or both of the keys do not exist in BST.
         }
 
+        //Iterate in reverse order through ArrayLists to find lowest matching Node.
         for (int i = ancestors1.size()-1; i >= 0; i--) {
             for (int j = ancestors2.size()-1; j >= 0; j--) {
                 //Return lowest ancestor whose keys equal each other.
                 if (ancestors1.get(i).compareTo(ancestors2.get(j)) == 0) {
-                    return ancestors1.get(i);
+                    return getNode(ancestors1.get(i));
                 }
             }
         }
 
-        return null;    //Should never return here.
+        return root;    //All nodes have the root in common. i.e. highest common ancestor
     }
 
     /**
@@ -146,11 +155,10 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         }
 
         ArrayList<Key> ancestors = new ArrayList<Key>();
-
         Node current = root;
 
         //While not yet at destination node.
-        while (current.key.compareTo(key) != 0) {
+        while (!current.key.equals(key)) {
             ancestors.add(current.key);
 
             //Go left or right based on key.
@@ -163,9 +171,11 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             }
 
             if (current == null) {
-                return null;
+                return null;    //Key doesn't exist in BST.
             }
         }
+
+        ancestors.add(key); //Add key itself to the end of the chain.
 
         return ancestors;
     }

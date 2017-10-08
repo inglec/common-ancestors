@@ -23,4 +23,36 @@ public class BSTTesting {
         bst.insert(2, "Harry"); //Replace Aaron with Harry.
         assertEquals("( ( x ) 2:Harry[1] ( ( x ) 3:Stephen[2] ( x ) ) ) 4:Paul[0] ( ( x ) 8:Ryan[1] ( x ) )", bst.toString());
     }
+
+    @Test
+    public void testLowestCommonAncestor() {
+        BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
+
+        //Test lowest common ancestor in tree of no nodes.
+        assertEquals(null, bst.lowestCommonAncestor(2, 4));
+
+        //Test lowest common ancestor of two nodes.
+        bst.insert(1, "A");
+        bst.insert(8, "B");
+        bst.insert(3, "C");
+        bst.insert(10, "D");
+        bst.insert(6, "E");
+        bst.insert(2, "F");
+        bst.insert(4, "G");
+        //  1
+        //     \
+        //        8
+        //      /  \
+        //    3   10
+        //   /  \
+        //  2    6
+        //      /
+        //     4
+        assertEquals(3, (int)bst.lowestCommonAncestor(2, 6).getKey());
+        assertEquals(8, (int)bst.lowestCommonAncestor(4, 10).getKey());
+        assertEquals(1, (int)bst.lowestCommonAncestor(1, 8).getKey());
+
+        //Test lowest common ancestor of one node.
+        assertEquals(2, (int)bst.lowestCommonAncestor(2, 2).getKey());
+    }
 }
