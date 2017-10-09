@@ -4,22 +4,34 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
     public class Node {
-        private Node left, right;
+        private Node left, right;   //Left and right children of this node. Null if empty.
 
-        private Key key;
-        private Value value;
+        private Key key;    //Unique key of the node.
+        private Value value;    //May have same value as other nodes.
 
+        /**
+         * Constructor.
+         * @param key - Unique key of the node.
+         * @param value - Non-unique value of the node.
+         */
         public Node(Key key, Value value) {
             this.key = key;
             this.value = value;
         }
 
-        public Key getKey() {
-            return key;
-        }
+        /*
+         * Getter functions for the Node class private variables.
+         */
+        public Node getLeftChild() { return left; }
 
-        public Value getValue() {
-            return value;
+        public Node getRightChild() { return right; }
+
+        public Key getKey() { return key; }
+
+        public Value getValue() { return value; }
+
+        public boolean equals(Node node) {
+            return (left == node.left) && (right == node.right) && key.equals(node.key) && value.equals(node.value);
         }
     }
 
@@ -60,10 +72,10 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             node.right = insert(node.right, key, value);
         }
         else {
-            node.value = value;
+            node.value = value;   //Update value of node to new value.
         }
 
-        return node;    //Update all nodes with new subtrees.
+        return node;    //Update all affected nodes with new subtrees.
     }
 
     /**
@@ -80,7 +92,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * Search for a node by its key, and then return it.
      *
      * @param key - The key of the node being searched for.
-     * @return    - The node, if found.
+     * @return The node, if found.
      */
     public Node getNode(Key key) {
         return getNode(root, key);
@@ -91,7 +103,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      *
      * @param node - The node whose subtree is being searched.
      *        key  - The key of the node being searched for.
-     * @return     - The node, if found.
+     * @return The node, if found.
      */
     private Node getNode(Node node, Key key) {
         //If key does not exist in BST return null.
@@ -104,7 +116,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
         //If cmp < 0, go left.
         //If cmp > 0, go right.
-        //If cmp == 0, return node's value.
+        //If cmp == 0, return node.
         if (cmp < 0) {
             return getNode(node.left, key);
         }
@@ -123,8 +135,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * @return The lowest common ancestor.
      */
     public Node lowestCommonAncestor(Key key1, Key key2) {
-        ArrayList<Key> ancestors1 = getAncestors(key1);
-        ArrayList<Key> ancestors2 = getAncestors(key2);
+        ArrayList<Node> ancestors1 = getAncestors(key1);
+        ArrayList<Node> ancestors2 = getAncestors(key2);
 
         if (ancestors1 == null || ancestors2 == null) {
             return null;    //One or both of the keys do not exist in BST.
@@ -133,9 +145,9 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         //Iterate in reverse order through ArrayLists to find lowest matching Node.
         for (int i = ancestors1.size()-1; i >= 0; i--) {
             for (int j = ancestors2.size()-1; j >= 0; j--) {
-                //Return lowest ancestor whose keys equal each other.
-                if (ancestors1.get(i).compareTo(ancestors2.get(j)) == 0) {
-                    return getNode(ancestors1.get(i));
+                //Return first ancestor that matches.
+                if (ancestors1.get(i).equals(ancestors2.get(j))) {
+                    return ancestors1.get(i);
                 }
             }
         }
@@ -144,22 +156,22 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Return the trail of keys required to reach the required node from root.
+     * Return the trail of nodes required to reach the required node from root.
      *
      * @param key - The key of the target node.
      * @return - Path to target node. Null if not in BST.
      */
-    public ArrayList<Key> getAncestors(Key key) {
+    public ArrayList<Node> getAncestors(Key key) {
         if (root == null) {
             return null;    //BST is empty.
         }
 
-        ArrayList<Key> ancestors = new ArrayList<Key>();
+        ArrayList<Node> ancestors = new ArrayList<Node>();
         Node current = root;
 
         //While not yet at destination node.
         while (!current.key.equals(key)) {
-            ancestors.add(current.key);
+            ancestors.add(current);
 
             //Go left or right based on key.
             int cmp = key.compareTo(current.key);
@@ -175,7 +187,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             }
         }
 
-        ancestors.add(key); //Add key itself to the end of the chain.
+        ancestors.add(current); //Add node itself to the end of the chain.
 
         return ancestors;
     }
