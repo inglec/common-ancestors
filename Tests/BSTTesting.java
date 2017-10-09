@@ -54,5 +54,8 @@ public class BSTTesting {
 
         //Test lowest common ancestor of one node.
         assertEquals(2, (int)bst.lowestCommonAncestor(2, 2).getKey());
+
+        //Test non-existent key in BST.
+        assertEquals(null, bst.lowestCommonAncestor(5, 6));
     }
 }
