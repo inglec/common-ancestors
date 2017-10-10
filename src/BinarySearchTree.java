@@ -3,10 +3,10 @@ import java.util.ArrayList;
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
-    public class Node {
+    private class Node {
         private Node left, right;   //Left and right children of this node. Null if empty.
 
-        private Key key;    //Unique key of the node.
+        private Key key;        //Unique key of the node.
         private Value value;    //May have same value as other nodes.
 
         /**
@@ -14,35 +14,23 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
          * @param key - Unique key of the node.
          * @param value - Non-unique value of the node.
          */
-        public Node(Key key, Value value) {
+        private Node(Key key, Value value) {
             this.key = key;
             this.value = value;
-        }
-
-        /*
-         * Getter functions for the Node class private variables.
-         */
-        public Node getLeftChild() { return left; }
-
-        public Node getRightChild() { return right; }
-
-        public Key getKey() { return key; }
-
-        public Value getValue() { return value; }
-
-        public boolean equals(Node node) {
-            return (left == node.left) && (right == node.right) && key.equals(node.key) && value.equals(node.value);
         }
     }
 
     /**
      * Insert a new node into the BST.
+     * Should not insert a new node with a null key.
      *
      * @param key   - The key of the new node.
      * @param value - The value of the new node.
      */
     public void insert(Key key, Value value) {
-        root = insert(root, key, value);
+        if (key != null && value != null) {
+            root = insert(root, key, value);
+        }
     }
 
     /**
@@ -54,17 +42,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * @return      - The node containing the new subtree.
      */
     private Node insert(Node node, Key key, Value value) {
-        //If BST is empty, return new node as root.
+        //If empty link found, create new node here.
         if (node == null) {
             return new Node(key, value);
         }
 
         //Decide where to place the new node in relation to the current node.
         int cmp = key.compareTo(node.key);
-
-        //If cmp < 0, insert new node to left.
-        //If cmp > 0, insert new node to right.
-        //If cmp == 0, update current value.
         if (cmp < 0) {
             node.left = insert(node.left, key, value);
         }
@@ -80,21 +64,31 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Search for a node by its key, and then return its value.
+     * A null key has a null value.
      *
      * @param key - The key of the node being searched for.
-     * @return    - The value of the node, if found.
+     * @return    - The value of the node, if found. Null if not found.
      */
     public Value getValue(Key key) {
-        return getNode(key).value;
+        Node node = getNode(key);
+
+        if (node == null) {
+            return null;
+        }
+        return node.value;
     }
 
     /**
      * Search for a node by its key, and then return it.
+     * A null key has a null value.
      *
      * @param key - The key of the node being searched for.
      * @return The node, if found.
      */
     public Node getNode(Key key) {
+        if (key == null) {
+            return null;
+        }
         return getNode(root, key);
     }
 
@@ -129,67 +123,64 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
+     * Returns whether or not a given key exists in the BST.
+     * @param key - The key of the node being searched for.
+     * @return Whether or not the node of the key exists.
+     */
+    public boolean contains(Key key) {
+        return getNode(key) != null;
+    }
+
+    /**
      * Return the key of the lowest parent that two nodes have in common.
+     * Works by branching left or right until both nodes are on opposite sides of a subtree,
+     * or until one of the nodes is reached.
+     *
      * @param key1 - The key of the first node.
      * @param key2 - The key of the second node.
      * @return The lowest common ancestor.
      */
-    public Node lowestCommonAncestor(Key key1, Key key2) {
-        ArrayList<Node> ancestors1 = getAncestors(key1);
-        ArrayList<Node> ancestors2 = getAncestors(key2);
-
-        if (ancestors1 == null || ancestors2 == null) {
-            return null;    //One or both of the keys do not exist in BST.
+    public Key lowestCommonAncestor(Key key1, Key key2) {
+        if (root == null) {
+            return null;    //If BST is empty.
         }
 
-        //Iterate in reverse order through ArrayLists to find lowest matching Node.
-        for (int i = ancestors1.size()-1; i >= 0; i--) {
-            for (int j = ancestors2.size()-1; j >= 0; j--) {
-                //Return first ancestor that matches.
-                if (ancestors1.get(i).equals(ancestors2.get(j))) {
-                    return ancestors1.get(i);
-                }
-            }
+        if (!(contains(key1) && contains(key2))) {
+            return null;    //If both keys are not in BST.
         }
 
-        return root;    //All nodes have the root in common. i.e. highest common ancestor
+        if (key1.equals(root.key) || key2.equals(root.key)) {
+            return root.key;
+        }
+
+        if (key1.equals(key2)) {
+            return key1;
+        }
+
+        return lowestCommonAncestor(root, key1, key2);
     }
 
-    /**
-     * Return the trail of nodes required to reach the required node from root.
-     *
-     * @param key - The key of the target node.
-     * @return - Path to target node. Null if not in BST.
-     */
-    public ArrayList<Node> getAncestors(Key key) {
-        if (root == null) {
-            return null;    //BST is empty.
+    private Key lowestCommonAncestor(Node node, Key key1, Key key2) {
+        //Check if this node is one of the two being searched for.
+        if (key1.equals(node.key) || key2.equals(node.key)) {
+            return node.key;
         }
 
-        ArrayList<Node> ancestors = new ArrayList<Node>();
-        Node current = root;
+        int cmp1 = key1.compareTo(node.key);
+        int cmp2 = key2.compareTo(node.key);
 
-        //While not yet at destination node.
-        while (!current.key.equals(key)) {
-            ancestors.add(current);
-
-            //Go left or right based on key.
-            int cmp = key.compareTo(current.key);
-            if (cmp < 0) {
-                current = current.left;
-            }
-            else if (cmp > 0) {
-                current = current.right;
-            }
-
-            if (current == null) {
-                return null;    //Key doesn't exist in BST.
-            }
+        //If both nodes are on different sides of the subtree, return this node.
+        if (cmp1 != cmp2) {
+            return node.key;
         }
 
-        ancestors.add(current); //Add node itself to the end of the chain.
-
-        return ancestors;
+        //Else go left or right until both nodes are on different sides of the subtree.
+        if (cmp1 < 0) {
+            return lowestCommonAncestor(node.left, key1, key2);
+        }
+        else {
+            return lowestCommonAncestor(node.right, key1, key2);
+        }
     }
 
     /**
@@ -215,7 +206,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             return "x";
         }
         else {
-            return "( " + toString(node.left, depth+1) + " ) " + node.key + ":" + node.value + "[" + depth + "] ( " + toString(node.right, depth+1) + " )";
+            return "( " + toString(node.left, depth + 1) + " ) " + node.key + ":" + node.value + "[" + depth + "] ( " + toString(node.right, depth + 1) + " )";
         }
     }
 }

@@ -48,12 +48,13 @@ public class BSTTesting {
         //  2    6
         //      /
         //     4
-        assertEquals(3, (int)bst.lowestCommonAncestor(2, 6).getKey());
-        assertEquals(8, (int)bst.lowestCommonAncestor(4, 10).getKey());
-        assertEquals(1, (int)bst.lowestCommonAncestor(1, 8).getKey());
+        assertEquals(3, (int)bst.lowestCommonAncestor(2, 6));
+        assertEquals(8, (int)bst.lowestCommonAncestor(4, 10));
+        assertEquals(1, (int)bst.lowestCommonAncestor(1, 8));
+        assertEquals(3, (int)bst.lowestCommonAncestor(3, 6));
 
         //Test lowest common ancestor of one node.
-        assertEquals(2, (int)bst.lowestCommonAncestor(2, 2).getKey());
+        assertEquals(2, (int)bst.lowestCommonAncestor(2, 2));
 
         //Test non-existent key in BST.
         assertEquals(null, bst.lowestCommonAncestor(5, 6));
