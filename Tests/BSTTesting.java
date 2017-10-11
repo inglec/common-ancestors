@@ -4,6 +4,12 @@ import static org.junit.Assert.assertEquals;
 public class BSTTesting {
     @Test
     public void testInsert() {
+        //Test null key and null value.
+        BinarySearchTree<String, String> bst1 = new BinarySearchTree<String, String>();
+        bst1.insert(null, "hello"); //null key should not be inserted.
+        bst1.insert("hello", null); //null value should not be inserted.
+        assertEquals("x", bst1.toString());
+
         BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
 
         //Test the empty BST.
