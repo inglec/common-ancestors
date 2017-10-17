@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
@@ -149,10 +147,6 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             return null;    //If both keys are not in BST.
         }
 
-        if (key1.equals(root.key) || key2.equals(root.key)) {
-            return root.key;
-        }
-
         if (key1.equals(key2)) {
             return key1;
         }
@@ -177,7 +171,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             return lowestCommonAncestor(node.right, key1, key2);    //Both nodes are on the right side of this node.
         }
         else {
-            return node.key;    //No need to branch, so this is greatest commmon ancestor.
+            return node.key;    //Keys are on opposite sides of this subtree, so this is greatest commmon ancestor.
         }
     }
 
