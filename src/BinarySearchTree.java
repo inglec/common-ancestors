@@ -101,7 +101,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      */
     private Node getNode(Node node, Key key) {
         //If key does not exist in BST return null.
-        if (node == null) {
+        if (node == null || key == null) {
             return null;
         }
 
@@ -169,17 +169,15 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         int cmp1 = key1.compareTo(node.key);
         int cmp2 = key2.compareTo(node.key);
 
-        //If both nodes are on different sides of the subtree, return this node.
-        if (cmp1 != cmp2) {
-            return node.key;
+        //Choose direction to branch.
+        if (cmp1 < 0 && cmp2 < 0) {
+            return lowestCommonAncestor(node.left, key1, key2); //Both nodes are on the left side of this node.
         }
-
-        //Else go left or right until both nodes are on different sides of the subtree.
-        if (cmp1 < 0) {
-            return lowestCommonAncestor(node.left, key1, key2);
+        else if (cmp1 > 0 && cmp2 > 0) {
+            return lowestCommonAncestor(node.right, key1, key2);    //Both nodes are on the right side of this node.
         }
         else {
-            return lowestCommonAncestor(node.right, key1, key2);
+            return node.key;    //No need to branch, so this is greatest commmon ancestor.
         }
     }
 
@@ -209,4 +207,5 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             return "( " + toString(node.left, depth + 1) + " ) " + node.key + ":" + node.value + "[" + depth + "] ( " + toString(node.right, depth + 1) + " )";
         }
     }
+
 }
