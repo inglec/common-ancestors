@@ -19,7 +19,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Insert a new node into the BST.
+     * Insert a new node into the BST. If key exists, replace with new value.
      * Should not insert a new node with a null key.
      *
      * @param key   - The key of the new node.
@@ -37,7 +37,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * @param node  - The node below which the new node will be instered.
      * @param key   - The key of the new node.
      * @param value - The value of the new node.
-     * @return      - The node containing the new subtree.
+     * @return        The node containing the new subtree.
      */
     private Node insert(Node node, Key key, Value value) {
         //If empty link found, create new node here.
@@ -65,7 +65,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * A null key has a null value.
      *
      * @param key - The key of the node being searched for.
-     * @return    - The value of the node, if found. Null if not found.
+     * @return      The value of the node, if found. Null if not found.
      */
     public Value getValue(Key key) {
         Node node = getNode(key);
@@ -81,9 +81,9 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      * A null key has a null value.
      *
      * @param key - The key of the node being searched for.
-     * @return The node, if found.
+     * @return      The node, if found.
      */
-    public Node getNode(Key key) {
+    private Node getNode(Key key) {
         if (key == null) {
             return null;
         }
@@ -95,7 +95,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      *
      * @param node - The node whose subtree is being searched.
      *        key  - The key of the node being searched for.
-     * @return The node, if found.
+     * @return       The node, if found. Null otherwise.
      */
     private Node getNode(Node node, Key key) {
         //If key does not exist in BST return null.
@@ -136,13 +136,9 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
      *
      * @param key1 - The key of the first node.
      * @param key2 - The key of the second node.
-     * @return The lowest common ancestor.
+     * @return       The lowest common ancestor. Null if passes keys are invalid.
      */
     public Key lowestCommonAncestor(Key key1, Key key2) {
-        if (root == null) {
-            return null;    //If BST is empty.
-        }
-
         if (!(contains(key1) && contains(key2))) {
             return null;    //If both keys are not in BST.
         }
@@ -152,8 +148,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         }
 
         return lowestCommonAncestor(root, key1, key2);
-    }
 
+}
     private Key lowestCommonAncestor(Node node, Key key1, Key key2) {
         //Check if this node is one of the two being searched for.
         if (key1.equals(node.key) || key2.equals(node.key)) {

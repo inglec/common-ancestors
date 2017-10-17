@@ -15,8 +15,8 @@
       <file leaf-file-name="BinarySearchTree.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BinarySearchTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+            <state relative-caret-position="-392">
+              <caret line="157" column="0" lean-forward="true" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -25,10 +25,12 @@
       <file leaf-file-name="BSTTesting.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/BSTTesting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+            <state relative-caret-position="865">
+              <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2541#2558#0" expanded="true" />
+                <element signature="e#3370#3387#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,14 +73,13 @@
         <option value="$PROJECT_DIR$/src/Node.java" />
         <option value="$PROJECT_DIR$/Tests/Test.java" />
         <option value="$PROJECT_DIR$/Tests/MyFirstTest.java" />
-        <option value="$PROJECT_DIR$/Tests/BSTTesting.java" />
         <option value="$PROJECT_DIR$/src/BinarySearchTree.java" />
+        <option value="$PROJECT_DIR$/Tests/BSTTesting.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="655" />
-    <option name="y" value="-19" />
+    <option name="x" value="-9" />
     <option name="width" value="974" />
     <option name="height" value="1087" />
   </component>
@@ -126,14 +127,14 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="Repository.Attach.Sources" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$MAVEN_REPOSITORY$/junit/junit/4.12" />
+    <property name="last_opened_file_path" value="$APPLICATION_HOME_DIR$/plugins/coverage" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -300,15 +301,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_Binary_Search_Tree - 2017.10.10 at 11h 31m 48s.xml">
-      <configuration name="All in Binary Search Tree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_Binary_Search_Tree - 2017.10.10 at 13h 18m 26s.xml">
-      <configuration name="All in Binary Search Tree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_Binary_Search_Tree - 2017.10.10 at 13h 19m 59s.xml">
-      <configuration name="All in Binary Search Tree" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_Binary_Search_Tree - 2017.10.10 at 13h 31m 50s.xml">
       <configuration name="All in Binary Search Tree" configurationId="JUnit" />
     </history-entry>
@@ -328,6 +320,15 @@
       <configuration name="All in Binary Search Tree" configurationId="JUnit" />
     </history-entry>
     <history-entry file="All_in_Binary_Search_Tree - 2017.10.17 at 10h 28m 30s.xml">
+      <configuration name="All in Binary Search Tree" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_Binary_Search_Tree - 2017.10.17 at 11h 11m 06s.xml">
+      <configuration name="All in Binary Search Tree" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_Binary_Search_Tree - 2017.10.17 at 11h 21m 43s.xml">
+      <configuration name="All in Binary Search Tree" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_Binary_Search_Tree - 2017.10.17 at 11h 36m 45s.xml">
       <configuration name="All in Binary Search Tree" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -387,6 +388,8 @@
           <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -405,6 +408,8 @@
           <caret line="39" column="27" lean-forward="true" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -423,6 +428,8 @@
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -441,6 +448,8 @@
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -459,6 +468,8 @@
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -477,6 +488,8 @@
           <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -495,6 +508,8 @@
           <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -528,28 +543,30 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
-          <caret line="147" column="19" lean-forward="false" selection-start-line="147" selection-start-column="19" selection-end-line="147" selection-end-column="19" />
+          <caret line="234" column="18" lean-forward="false" selection-start-line="234" selection-start-column="18" selection-end-line="234" selection-end-column="18" />
           <folding>
-            <element signature="e#5748#5749#0" expanded="false" />
-            <element signature="e#5784#5785#0" expanded="false" />
+            <element signature="e#10065#10066#0" expanded="false" />
+            <element signature="e#10148#10149#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tests/BSTTesting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+        <state relative-caret-position="865">
+          <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2541#2558#0" expanded="true" />
+            <element signature="e#3370#3387#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BinarySearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+        <state relative-caret-position="-392">
+          <caret line="157" column="0" lean-forward="true" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
           <folding />
         </state>
       </provider>

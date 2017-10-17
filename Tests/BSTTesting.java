@@ -49,7 +49,7 @@ public class BSTTesting {
         //     \
         //        8
         //      /  \
-        //    3   10
+        //    3    10
         //   /  \
         //  2    6
         //      /
@@ -65,4 +65,71 @@ public class BSTTesting {
         //Test non-existent key in BST.
         assertEquals(null, bst.lowestCommonAncestor(5, 6));
     }
+
+    @Test
+    public void testContains() {
+        BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
+
+        //Test contains on an empty BST.
+        assertEquals(false, bst.contains(2));
+
+        //Create tree for testing.
+        bst.insert(1, "A");
+        bst.insert(8, "B");
+        bst.insert(3, "C");
+        bst.insert(10, "D");
+        bst.insert(6, "E");
+        bst.insert(2, "F");
+        bst.insert(4, "G");
+        //  1
+        //     \
+        //        8
+        //      /  \
+        //    3    10
+        //   /  \
+        //  2    6
+        //      /
+        //     4
+
+        //Test tree
+        assertEquals(true, bst.contains(1));
+        assertEquals(true, bst.contains(10));
+        assertEquals(true, bst.contains(4));
+        assertEquals(false, bst.contains(5));
+    }
+
+    @Test
+    public void testGetValue() {
+        BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
+
+        //Test contains on an empty BST.
+        assertEquals(null, bst.getValue(2));
+
+        //Create tree for testing.
+        bst.insert(1, "A");
+        bst.insert(8, "B");
+        bst.insert(3, "C");
+        bst.insert(10, "D");
+        bst.insert(6, "E");
+        bst.insert(2, "F");
+        bst.insert(4, "G");
+        //  1
+        //     \
+        //        8
+        //      /  \
+        //    3    10
+        //   /  \
+        //  2    6
+        //      /
+        //     4
+
+        //Test tree
+        assertEquals("F", bst.getValue(2));
+        assertEquals("A", bst.getValue(1));
+        assertEquals("D", bst.getValue(10));
+        assertEquals("G", bst.getValue(4));
+        assertEquals(null, bst.getValue(5));
+    }
+
+
 }
