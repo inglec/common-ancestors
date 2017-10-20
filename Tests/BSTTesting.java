@@ -5,10 +5,10 @@ public class BSTTesting {
     @Test
     public void testInsert() {
         //Test null key and null value.
-        BinarySearchTree<String, String> bst1 = new BinarySearchTree<String, String>();
-        bst1.insert(null, "hello"); //null key should not be inserted.
-        bst1.insert("hello", null); //null value should not be inserted.
-        assertEquals("x", bst1.toString());
+        BinarySearchTree<String, String> stringBst = new BinarySearchTree<String, String>();
+        stringBst.insert(null, "hello"); //null key should not be inserted.
+        stringBst.insert("hello", null); //null value should not be inserted.
+        assertEquals("x", stringBst.toString());
 
         BinarySearchTree<Integer, String> bst = new BinarySearchTree<Integer, String>();
 
@@ -41,7 +41,7 @@ public class BSTTesting {
         bst.insert(1, "A");
         bst.insert(8, "B");
         bst.insert(3, "C");
-        bst.insert(10, "D");
+        bst.insert(10,"D");
         bst.insert(6, "E");
         bst.insert(2, "F");
         bst.insert(4, "G");
@@ -92,6 +92,7 @@ public class BSTTesting {
         //     4
 
         //Test tree
+        assertEquals(false, bst.contains(null));
         assertEquals(true, bst.contains(1));
         assertEquals(true, bst.contains(10));
         assertEquals(true, bst.contains(4));
@@ -124,6 +125,7 @@ public class BSTTesting {
         //     4
 
         //Test tree
+        assertEquals(null, bst.getValue(null));
         assertEquals("F", bst.getValue(2));
         assertEquals("A", bst.getValue(1));
         assertEquals("D", bst.getValue(10));
