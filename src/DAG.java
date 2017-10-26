@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
 public class DAG {
-    private final int vertices;    //Number of vertices in DAG.
-    private final ArrayList<Integer>[] adjacencyList;
+    private final ArrayList<Integer>[] adjTable;    //Adjacency table for all adjacency lists.
 
     /**
      * Constructor.
@@ -10,17 +9,10 @@ public class DAG {
      * @param v - Number of vertices.
      */
     public DAG(int v) {
-        if (v > 0) {
-            vertices = v;
-        }
-        else {
-            vertices = 0;
-        }
-
-        //Create list of adjacent vertices for each vertex.
-        adjacencyList = (ArrayList<Integer>[]) new ArrayList[vertices];
-        for (int i = 0; i < vertices; i++) {
-            adjacencyList[i] = new ArrayList<Integer>();
+        //Create table of adjacency lists.
+        adjTable = (ArrayList<Integer>[]) new ArrayList[v];
+        for (int i = 0; i < v; i++) {
+            adjTable[i] = new ArrayList<Integer>();
         }
     }
 
@@ -31,13 +23,13 @@ public class DAG {
      * @param w - Destination vertex.
      */
     public void addEdge(int v, int w) {
-        ArrayList<Integer> current = adjacencyList[v];
+        ArrayList<Integer> adjList = adjTable[v];
 
-        if (!current.contains(w)) {
-            current.add(w);
+        if (!adjList.contains(w)) {
+            adjList.add(w);
 
             if (containsCycle()) {
-                current.remove(w);
+                adjList.remove(w);
                 System.out.println("Cycle-completing edge " + v + "->" + w + " ignored.");
             }
         }
@@ -50,19 +42,17 @@ public class DAG {
      * Return the vertices pointing from v.
      *
      * @param v - The origin vertex.
-     * @return The destination vertices, if any.
+     * @return The destination vertices as an iterable, if any.
      */
     public Iterable<Integer> adjacent(int v) {
-        //TODO
-        return null;
+        return adjTable[v];
     }
 
     /**
      * @return The number of vertices in the graph.
      */
     public int vertexCount() {
-        //TODO
-        return -1;
+        return adjTable.length;
     }
 
     /**
@@ -84,16 +74,17 @@ public class DAG {
     public String toString() {
         String string = "";
 
-        for (int i = 0; i < vertices; i++) {
-            ArrayList<Integer> current = adjacencyList[i];
+        for (int i = 0; i < adjTable.length; i++) {
+            ArrayList<Integer> adjList = adjTable[i];
             string += i + ": ";
 
-            for (int j = 0; j < current.size(); j++) {
-                string += current.get(j) + " ";
+            for (int j = 0; j < adjList.size(); j++) {
+                string += adjList.get(j) + " ";
             }
             string += "\n";
         }
 
         return string;
     }
+
 }
