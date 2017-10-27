@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DAG {
+    public static final int UNVISITED = 0, IN_PROGRESS = 1, VISITED = 2;
+
     private final ArrayList<Integer>[] adjTable;    //Adjacency table for all adjacency lists.
 
     /**
@@ -11,9 +14,8 @@ public class DAG {
     public DAG(int v) {
         //Create table of adjacency lists.
         adjTable = (ArrayList<Integer>[]) new ArrayList[v];
-        for (int i = 0; i < v; i++) {
+        for (int i = 0; i < v; i++)
             adjTable[i] = new ArrayList<Integer>();
-        }
     }
 
     /**
@@ -24,51 +26,52 @@ public class DAG {
      */
     public void addEdge(int v, int w) {
         ArrayList<Integer> adjList = adjTable[v];
-
         if (!adjList.contains(w)) {
             adjList.add(w);
-
             if (containsCycle()) {
-                adjList.remove(w);
+                // Remove offending edge from adjacency list.
+                for (int i = 0; i < adjList.size(); i++) {
+                    if (adjList.get(i) == w)
+                        adjList.remove(i);
+                }
                 System.out.println("Cycle-completing edge " + v + "->" + w + " ignored.");
             }
         }
-        else {
-            System.out.println("Duplicate edge " + v + "->" + w + " ignored.");
-        }
+        else System.out.println("Duplicate edge " + v + "->" + w + " ignored.");
     }
 
     /**
-     * Return the vertices pointing from v.
-     *
-     * @param v - The origin vertex.
-     * @return The destination vertices as an iterable, if any.
-     */
-    public Iterable<Integer> adjacent(int v) {
-        return adjTable[v];
-    }
-
-    /**
-     * @return The number of vertices in the graph.
-     */
-    public int vertexCount() {
-        return adjTable.length;
-    }
-
-    /**
-     * @return Whether the current graph contains a cycle.
+     * @return Whether or not the current graph contains a cycle.
      */
     public boolean containsCycle() {
-        //TODO
+        // 0 = unvisited, 1 = search in progress, 2 = visited by other search.
+        int[] vertices =  new int[adjTable.length];
+        Arrays.fill(vertices, UNVISITED);
+
+        for (int v = 0; v < adjTable.length; v++) {
+            if (containsCycle(v, vertices))
+                return true;
+        }
         return false;
     }
 
-    /**
-     * @return The number of edges in the graph.
-     */
-    public int edgeCount() {
-        //TODO
-        return -1;
+    private boolean containsCycle(int vertex, int[] vertices) {
+        switch (vertices[vertex]) {
+            case IN_PROGRESS:   // A cycle exists.
+                return true;
+            case VISITED:       // This path was already checked - ignore.
+                return false;
+            case UNVISITED:
+                vertices[vertex] = IN_PROGRESS;
+        }
+
+        ArrayList<Integer> adjList = adjTable[vertex];  // Adjacency list for current vertex.
+        for (int v : adjList) {
+            if (containsCycle(v, vertices))
+                return true;
+        }
+        vertices[vertex] = VISITED;  // Mark permanently as visited.
+        return false;
     }
 
     public String toString() {
@@ -76,14 +79,12 @@ public class DAG {
 
         for (int i = 0; i < adjTable.length; i++) {
             ArrayList<Integer> adjList = adjTable[i];
-            string += i + ": ";
 
-            for (int j = 0; j < adjList.size(); j++) {
+            string += i + ": ";
+            for (int j = 0; j < adjList.size(); j++)
                 string += adjList.get(j) + " ";
-            }
             string += "\n";
         }
-
         return string;
     }
 

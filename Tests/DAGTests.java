@@ -24,6 +24,7 @@ public class DAGTests {
     @Test
     public void testAddEdge() {
         DAG dag = new DAG(10);
+        assertEquals("0: \n1: \n2: \n3: \n4: \n5: \n6: \n7: \n8: \n9: \n", dag.toString());
         dag.addEdge(0, 9);
         dag.addEdge(0, 4);
         dag.addEdge(2, 9);
@@ -38,10 +39,12 @@ public class DAGTests {
     public void testAddCycle() {
         //Attempt to add edge that would result in a cycle.
         DAG dag = new DAG(10);
+
+
         dag.addEdge(0, 4);
         dag.addEdge(4, 6);
         dag.addEdge(6, 0);  //Would complete cycle 0-4-6-0
-        assertEquals("0: 9 4 \n1: \n2: 9 \n3: \n4: 6 \n5: \n6: \n7: \n8: \n9: \n", dag.toString());
+        assertEquals("0: 4 \n1: \n2: \n3: \n4: 6 \n5: \n6: \n7: \n8: \n9: \n", dag.toString());
     }
 
 }
