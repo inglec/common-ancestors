@@ -25,6 +25,10 @@ public class DAG {
      * @param w - Destination vertex.
      */
     public void addEdge(int v, int w) {
+        addEdge(adjTable, v, w);
+    }
+
+    private void addEdge(ArrayList<Integer>[] adjTable, int v, int w) {
         ArrayList<Integer> adjList = adjTable[v];
         if (!adjList.contains(w)) {
             adjList.add(w);
@@ -89,7 +93,25 @@ public class DAG {
      * @return The vertex which is the closest connected vertex to both v1 and v2.
      */
     public int lowestCommonAncestor(int v1, int v2) {
+        ArrayList<Integer>[] reversed = reverseAdjacencyTable();
+
         return -1;
+    }
+
+    /**
+     * Reverses adjacency table to instead show the ancestor of each node rather than the descendant.
+     * @return The reversed adjacency table.
+     */
+    private ArrayList<Integer>[] reverseAdjacencyTable() {
+        ArrayList<Integer>[] reversed = (ArrayList<Integer>[]) new ArrayList[adjTable.length];
+        Arrays.fill(reversed, new ArrayList<Integer>());    // Fill each index with empty adjacency list.
+
+        // For each v->w, add w->v to reversed adjacency table.
+        for (int v = 0; v < adjTable.length; v++) {
+            for (int w : adjTable[v])
+                addEdge(reversed, w, v);
+        }
+        return reversed;
     }
 
     /**
@@ -103,12 +125,9 @@ public class DAG {
      */
     public String toString() {
         String string = "";
-
-        for (int i = 0; i < adjTable.length; i++) {
-            ArrayList<Integer> adjList = adjTable[i];   // Adjacency List for vertex i.
-
-            string += i + ": ";
-            for (int vertex : adjList)
+        for (int v = 0; v < adjTable.length; v++) {
+            string += v + ": ";
+            for (int vertex : adjTable[v])  // Add each vertex in the current adjacency list.
                 string += vertex + " ";
             string += "\n";
         }
