@@ -72,6 +72,8 @@ public class DAGTests {
         assertEquals(-1, dag.lowestCommonAncestor(-1, 7));
         assertEquals(-1, dag.lowestCommonAncestor(4, -1));
         assertEquals(-1, dag.lowestCommonAncestor(5, 2));
+        assertEquals(-1, dag.lowestCommonAncestor(10, 2));
+
         assertEquals(2, dag.lowestCommonAncestor(2, 2));
         assertEquals(0, dag.lowestCommonAncestor(0, 9));
         assertEquals(5, dag.lowestCommonAncestor(7, 9));
@@ -79,6 +81,7 @@ public class DAGTests {
         assertEquals(5, dag.lowestCommonAncestor(5, 4));
         assertEquals(0, dag.lowestCommonAncestor(3, 4));
         assertEquals(5, dag.lowestCommonAncestor(7, 4));
+
     }
 
 }
