@@ -66,7 +66,7 @@ public class DAG {
         }
 
         ArrayList<Integer> adjList = adjTable[vertex];  // Adjacency list for current vertex.
-        for (int v : adjList) {
+        for (int v : adjList) { // Check each vertex in adjacency list for cycles.
             if (containsCycle(v, vertices))
                 return true;
         }
@@ -74,15 +74,19 @@ public class DAG {
         return false;
     }
 
+    public int lowestCommonAncestor(int v1, int v2) {
+        return -1;
+    }
+
     public String toString() {
         String string = "";
 
         for (int i = 0; i < adjTable.length; i++) {
-            ArrayList<Integer> adjList = adjTable[i];
+            ArrayList<Integer> adjList = adjTable[i];   // Adjacency List for vertex i.
 
             string += i + ": ";
-            for (int j = 0; j < adjList.size(); j++)
-                string += adjList.get(j) + " ";
+            for (int vertex : adjList)
+                string += vertex + " ";
             string += "\n";
         }
         return string;
