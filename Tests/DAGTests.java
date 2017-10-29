@@ -59,7 +59,7 @@ public class DAGTests {
     @Test
     public void testLowestCommonAncestor() {
         DAG dag = new DAG(10);
-        assertEquals(-1, dag.lowestCommonAncestor(4, 7));
+        assertEquals("[]", dag.lowestCommonAncestors(4, 7).toString());
 
         dag.addEdge(0, 3);  //     0
         dag.addEdge(0, 5);  //    / \
@@ -69,19 +69,31 @@ public class DAGTests {
         dag.addEdge(5, 9);  //     |   |
         dag.addEdge(9, 4);  //     8   4
 
-        assertEquals(-1, dag.lowestCommonAncestor(-1, 7));
-        assertEquals(-1, dag.lowestCommonAncestor(4, -1));
-        assertEquals(-1, dag.lowestCommonAncestor(5, 2));
-        assertEquals(-1, dag.lowestCommonAncestor(10, 2));
+        // Test LCA of vertices that are not in graph.
+        assertEquals(null, dag.lowestCommonAncestors(-1, 7));
+        assertEquals(null, dag.lowestCommonAncestors(4, -1));
+        assertEquals(null, dag.lowestCommonAncestors(10, 2));
 
-        assertEquals(2, dag.lowestCommonAncestor(2, 2));
-        assertEquals(0, dag.lowestCommonAncestor(0, 9));
-        assertEquals(5, dag.lowestCommonAncestor(7, 9));
-        assertEquals(5, dag.lowestCommonAncestor(8, 4));
-        assertEquals(5, dag.lowestCommonAncestor(5, 4));
-        assertEquals(0, dag.lowestCommonAncestor(3, 4));
-        assertEquals(5, dag.lowestCommonAncestor(7, 4));
+        // Test LCA of vertices in graph.
+        assertEquals("[]", dag.lowestCommonAncestors(5, 2).toString());
+        assertEquals("[2]", dag.lowestCommonAncestors(2, 2).toString());
+        assertEquals("[0]", dag.lowestCommonAncestors(0, 9).toString());
+        assertEquals("[5]", dag.lowestCommonAncestors(7, 9).toString());
+        assertEquals("[5]", dag.lowestCommonAncestors(8, 4).toString());
+        assertEquals("[5]", dag.lowestCommonAncestors(5, 4).toString());
+        assertEquals("[0]", dag.lowestCommonAncestors(3, 4).toString());
+        assertEquals("[5]", dag.lowestCommonAncestors(7, 4).toString());
+    }
 
+    @Test
+    public void lowestCommonAncestors() {
+        DAG dag = new DAG(10);
+        dag.addEdge(0, 3);
+        dag.addEdge(0, 5);
+        dag.addEdge(2, 3);
+        dag.addEdge(2, 5);
+
+        assertEquals("[0, 2]", dag.lowestCommonAncestors(3, 5).toString());
     }
 
 }
