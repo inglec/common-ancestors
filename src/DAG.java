@@ -1,10 +1,11 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DAG {
     public static final int UNVISITED = 0, IN_PROGRESS = 1, VISITED = 2;
-    public static final int WHITE = 0, BLUE = 1, RED = 2;
 
     private final ArrayList<Integer>[] adjTable;    //Adjacency table for all adjacency lists.
 
@@ -94,73 +95,81 @@ public class DAG {
      * @param v2 - vertex 2
      * @return The vertex which is the closest connected vertex to both v1 and v2.
      */
-    public int lowestCommonAncestor(int v1, int v2) {
+    public ArrayList<Integer> lowestCommonAncestors(int v1, int v2) {
+        ArrayList<Integer> lowestCommonAncestors = new ArrayList<Integer>();
         if (v1 == v2) {
-            return v1;
+            lowestCommonAncestors.add(v1);
+            return lowestCommonAncestors;
         }
         if (v1 < 0 || v1 >= adjTable.length || v2 < 0 || v2 >= adjTable.length) {
-            return -1;
+            return null;
         }
 
         //Reverse adjacency table to find parents of all vertices.
         ArrayList<Integer>[] parentTable = reverse(adjTable);
 
-        // Create array to represent each ancestor's colour.
-        //   WHITE = Not an ancestor of either v1 or v2.
-        //   BLUE = Ancestor of v1.
-        //   RED = Ancestor of both v1 and v2.
-        int[] ancestors = new int[adjTable.length];
-        Arrays.fill(ancestors, WHITE);
+        boolean[] v1Ancestors = new boolean[adjTable.length];
+        Arrays.fill(v1Ancestors, false);
 
-        // Mark each ancestor of v1 BLUE.
-        ancestors[v1] = BLUE;
+        v1Ancestors[v1] = true;
         for (int v : parentTable[v1]) {
-            if (ancestors[v] == WHITE)
-                markAncestors(parentTable, ancestors, v);
+            markAncestors(parentTable, v1Ancestors, v);
         }
 
-        // Mark each BLUE ancestor of v2 RED and add to list of common ancestors along with the depth.
-        int[] commonAncestors = new int[parentTable.length];
-        Arrays.fill(commonAncestors, -1);
-        if (ancestors[v2] == BLUE) {
-            return v2;
-        }
-        for (int v : parentTable[v2]) {
-            getCommonAncestors(parentTable, ancestors, v, commonAncestors, 0);
+        //Populate ArrayList with lowest common ancestors.
+        Queue<Integer> currentLevel = new LinkedList<Integer>();
+        Queue<Integer> nextLevel = new LinkedList<Integer>();
+        for (int v : parentTable[v2])
+            currentLevel.add(v);
+
+        while (!currentLevel.isEmpty()) {
+            while (!currentLevel.isEmpty()) {
+                int v = currentLevel.remove();
+
+                if (v1Ancestors[v])
+                    lowestCommonAncestors.add(v);
+
+                if (lowestCommonAncestors.isEmpty()) {
+                    for (int w : parentTable[v])
+                        nextLevel.add(w);
+                }
+            }
+            currentLevel = nextLevel;
+            nextLevel = new LinkedList<Integer>();
         }
 
-        // Determine lowest common ancestor by the depth of each ancestor.
-        int lca = -1;   // Lowest Common Ancestor
-        for (int v = 0; v < commonAncestors.length; v++) {
-            if (commonAncestors[v] >= 0)
-                lca = v;
-        }
-        if (lca == -1)
-            return -1;  // No common ancestor.
-
-        for (int v = 0; v < commonAncestors.length; v++) {
-            if ((commonAncestors[v] != -1) && (commonAncestors[v] < commonAncestors[lca]))
-                lca = v;
-        }
-        return lca;
+        return lowestCommonAncestors;
     }
 
-    private void markAncestors(ArrayList<Integer>[] parentTable, int[] ancestors, int vertex) {
-        ancestors[vertex] = BLUE;
+    /**
+     * Use DFS to mark all vertices that have v1 as an ancestor.
+     * @param parentTable
+     * @param v1Ancestors
+     * @param vertex
+     */
+    private void markAncestors(ArrayList<Integer>[] parentTable, boolean[] v1Ancestors, int vertex) {
+        v1Ancestors[vertex] = true;
         for (int v : parentTable[vertex]) {
-            markAncestors(parentTable, ancestors, v);
+            markAncestors(parentTable, v1Ancestors, v);
         }
     }
 
-    private void getCommonAncestors(ArrayList<Integer>[] parentTable, int[] ancestors, int vertex, int[] commonAncestors, int depth) {
-        if (ancestors[vertex] == BLUE) {
-            ancestors[vertex] = RED;
-            commonAncestors[vertex] = depth;
-        }
+    /*
+    unmark all vertices
+    choose some starting vertex x
+    mark x
+    list L = x
+    tree T = x
+    while L nonempty
+    choose some vertex v from front of list
+    visit v
+    for each unmarked neighbor w
+        mark w
+        add it to end of list
+        add edge vw to T
+     */
+    private void commonAncestors(ArrayList<Integer>[] parentTable, boolean[] v1Ancestors, int vertex, Queue<Integer> queue, ArrayList<Integer> lowestCommonAncestors) {
 
-        for (int v : parentTable[vertex]) {
-            getCommonAncestors(parentTable, ancestors, v, commonAncestors, depth+1);
-        }
     }
 
     /**
