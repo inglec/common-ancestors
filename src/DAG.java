@@ -6,7 +6,7 @@ import java.util.Queue;
 public class DAG {
     public static final int UNVISITED = 0, IN_PROGRESS = 1, VISITED = 2;
 
-    private final ArrayList<Integer>[] adjTable;    //Adjacency table for all adjacency lists.
+    private final ArrayList<Integer>[] adjTable;    // Adjacency table for all adjacency lists.
 
     /**
      * Constructor.
@@ -33,6 +33,7 @@ public class DAG {
 
     /**
      * Add edge v->w to the adjacency table if it does not exist otherwise.
+     *
      * @param adjTable - The adjacency table to insert the new edge.
      * @param v - Origin vertex.
      * @param w - Destination vertex.
@@ -70,6 +71,7 @@ public class DAG {
     /**
      * Recursively mark all vertices in adjacency table as IN_PROGRESS.
      * If an IN_PROGRESS node is encountered, then a cycle exists.
+     *
      * @param vertex - The current vertex whose adjacency table is to be searched.
      * @param vertices - The status of each vertex in the graph. UNVISITED, IN_PROGRESS or VISITED.
      * @return Whether or not a cycle exists for said vertex.
@@ -96,8 +98,9 @@ public class DAG {
     /**
      * Returns the lowest common ancestor of 2 nodes: v1 and v2.
      * Returns -1 if no such nodes exist or if they are unconnected.
-     * @param v1 - vertex 1
-     * @param v2 - vertex 2
+     *
+     * @param v1 - vertex 1.
+     * @param v2 - vertex 2.
      * @return The vertex which is the closest connected vertex to both v1 and v2.
      */
     public ArrayList<Integer> lowestCommonAncestors(int v1, int v2) {
@@ -110,7 +113,7 @@ public class DAG {
             return null;
         }
 
-        //Reverse adjacency table to find parents of all vertices.
+        // Reverse adjacency table to find parents of all vertices.
         ArrayList<Integer>[] parentTable = reverse(adjTable);
 
         boolean[] v1Ancestors = new boolean[adjTable.length];
@@ -121,7 +124,7 @@ public class DAG {
             markAncestors(parentTable, v1Ancestors, v);
         }
 
-        //Populate ArrayList with lowest common ancestors.
+        // Populate ArrayList with lowest common ancestors.
         Queue<Integer> currentLevel = new LinkedList<Integer>();
         Queue<Integer> nextLevel = new LinkedList<Integer>();
         for (int v : parentTable[v2])
@@ -148,7 +151,8 @@ public class DAG {
 
     /**
      * Use DFS to mark all vertices that have v1 as an ancestor.
-     * @param parentTable - The inverted adjacency list.
+     *
+     * @param parentTable - The inverted adjacency table.
      * @param v1Ancestors - Boolean array containing the ancestors of v1.
      * @param vertex - The current vertex in the DFS.
      */
@@ -161,6 +165,7 @@ public class DAG {
 
     /**
      * Reverses adjacency table to instead show the ancestor of each node rather than the descendant.
+     *
      * @param adjTable - The adjacency table being reversed.
      * @return The reversed adjacency table.
      */
