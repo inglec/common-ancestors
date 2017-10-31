@@ -1,7 +1,5 @@
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class DAGTests {
     @Test
@@ -34,6 +32,10 @@ public class DAGTests {
 
         //Attempt to add duplicate edge
         dag.addEdge(2, 9);
+        assertEquals("0: 9 4 \n1: \n2: 9 \n3: \n4: \n5: \n6: \n7: \n8: \n9: \n", dag.toString());
+
+        //Attempt to add edge between 0 and non-existent vertex.
+        dag.addEdge(0, 10);
         assertEquals("0: 9 4 \n1: \n2: 9 \n3: \n4: \n5: \n6: \n7: \n8: \n9: \n", dag.toString());
     }
 
@@ -87,12 +89,12 @@ public class DAGTests {
 
     @Test
     public void lowestCommonAncestors() {
+        // Test where LCA has multiple results.
         DAG dag = new DAG(10);
         dag.addEdge(0, 3);
         dag.addEdge(0, 5);
         dag.addEdge(2, 3);
         dag.addEdge(2, 5);
-
         assertEquals("[0, 2]", dag.lowestCommonAncestors(3, 5).toString());
     }
 

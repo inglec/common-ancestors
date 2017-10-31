@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -11,7 +10,6 @@ public class DAG {
 
     /**
      * Constructor.
-     *
      * @param v - Number of vertices.
      */
     public DAG(int v) {
@@ -22,7 +20,7 @@ public class DAG {
     }
 
     /**
-     * Add a directed edge from v -> w.
+     * Add a directed edge from v->w.
      *
      * @param v - Origin vertex.
      * @param w - Destination vertex.
@@ -30,8 +28,15 @@ public class DAG {
     public void addEdge(int v, int w) {
         if (v >= 0 && v < adjTable.length && w >= 0 && w < adjTable.length)
             addEdge(adjTable, v, w);
+        else System.out.println("Edge " + v + "->" + w + " ignored due to non-existent vertex.");
     }
 
+    /**
+     * Add edge v->w to the adjacency table if it does not exist otherwise.
+     * @param adjTable - The adjacency table to insert the new edge.
+     * @param v - Origin vertex.
+     * @param w - Destination vertex.
+     */
     private void addEdge(ArrayList<Integer>[] adjTable, int v, int w) {
         ArrayList<Integer> adjList = adjTable[v];   // Adjacency list for vertex v.
         if (!adjList.contains(w)) {
@@ -143,9 +148,9 @@ public class DAG {
 
     /**
      * Use DFS to mark all vertices that have v1 as an ancestor.
-     * @param parentTable
-     * @param v1Ancestors
-     * @param vertex
+     * @param parentTable - The inverted adjacency list.
+     * @param v1Ancestors - Boolean array containing the ancestors of v1.
+     * @param vertex - The current vertex in the DFS.
      */
     private void markAncestors(ArrayList<Integer>[] parentTable, boolean[] v1Ancestors, int vertex) {
         v1Ancestors[vertex] = true;
@@ -154,26 +159,9 @@ public class DAG {
         }
     }
 
-    /*
-    unmark all vertices
-    choose some starting vertex x
-    mark x
-    list L = x
-    tree T = x
-    while L nonempty
-    choose some vertex v from front of list
-    visit v
-    for each unmarked neighbor w
-        mark w
-        add it to end of list
-        add edge vw to T
-     */
-    private void commonAncestors(ArrayList<Integer>[] parentTable, boolean[] v1Ancestors, int vertex, Queue<Integer> queue, ArrayList<Integer> lowestCommonAncestors) {
-
-    }
-
     /**
      * Reverses adjacency table to instead show the ancestor of each node rather than the descendant.
+     * @param adjTable - The adjacency table being reversed.
      * @return The reversed adjacency table.
      */
     private ArrayList<Integer>[] reverse(ArrayList<Integer>[] adjTable) {
@@ -192,10 +180,10 @@ public class DAG {
     /**
      * The String representation of the adjacency table.
      * Returns the adjacency list for each vertex in the graph in the following form:
-     * 1: 3, 5
-     * 2:
-     * 3: 6, 7, 2
-     * 4 :
+     * 0: 3, 5
+     * 1:
+     * 2: 6, 7, 2
+     * 3:
      * etc...
      */
     public String toString() {
